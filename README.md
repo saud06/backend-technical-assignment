@@ -7,7 +7,7 @@ The [Indego GeoJSON station status API](https://www.rideindego.com/stations/json
 
 The [Open Weather Map API](https://openweathermap.org/current#name) provides a realtime snapshot of the current weather in a given city. Since Philadelphia is a small geographical area it is sufficient to obtain the weather for a geographical location central to Philadelphia. This API has a free plan, you will need to sign up for an API key.
 
-Using MongoDB, Node.js, Express, [Bluebird](https://npmjs.org/package/bluebird), Lodash and the Linux, Node.js and MongoDB hosting of your choice (see below for hosting details including free options), create a new API server which accumulates data over time and provides access to historical data for both weather and Indego bike availability, supporting the following queries at minimum. Note that it is sufficient to store data at hourly intervals.
+Using mySQL, Node.js, Express, [Bluebird](https://npmjs.org/package/bluebird), Lodash and the Linux, Node.js and mySQL hosting of your choice (see below for hosting details including free options), create a new API server which accumulates data over time and provides access to historical data for both weather and Indego bike availability, supporting the following queries at minimum. Note that it is sufficient to store data at hourly intervals.
 
 *Please note: historical CSV data downloads are available from Indego, however you should not rely on them.* Instead you should build your own node application that downloads fresh data at least once per hour, stores it and implements the API described below.
 
@@ -49,24 +49,6 @@ Include an `at` property in the same format indicating the actual time of the sn
 
 If no suitable data is available a 404 status code should be given.
 
-## Snapshots of one station over a range of times
-
-All historical data for a specific station between two timestamps:
-
-`/api/v1/stations/KIOSKIDGOESHERE?from=2017-11-01T11:00:00&to=2017-12-01T11:00:00&frequency=daily`
-
-For this last response, the returned JSON value should be an array of values in ascending chronological order. **Each element in the array** should look like:
-
-```javascript
-{
-  at: '2017-11-02T10:00:00',
-  station: { /* snapshot in the same format as the other APIs */ },
-  weather: { /* as per the Open Weather Map API response for Philadelphia */ }
-}
-```
-
-The `frequency` query parameter, if present, may be `hourly` or `daily`. The API should respond with only one entry from each hour or day. For `hourly` this should be the first entry on or after the top of the hour. For `daily` it should be the first entry on or after noon, Philadelphia time. If `frequency` is absent, `hourly` is the default.
-
 ## Unit tests
 
 All of the APIs should have unit test coverage; invoking `npm test` should test your package. We suggest [mocha](https://npmjs.org/package/mocha) but other frameworks are fine.
@@ -75,17 +57,17 @@ All of the APIs should have unit test coverage; invoking `npm test` should test 
 
 You'll need to make your API available on a server that we can communicate with from the office, not just on your laptop. Although this is not a system administration job, we're interested in seeing that you are comfortable with the fundamentals of installing services on Linux and/or working with cloud providers like Heroku.
 
-You might wish to use Linode or Digital Ocean and install both Node and MongoDB on a VPS yourself. Alternatively you might use a combination of Heroku and MLab, both of which have free tiers available.
+You might wish to use Linode or Digital Ocean and install both Node and mySQL on a VPS yourself. Alternatively you might use a combination of Heroku and MLab, both of which have free tiers available.
  
 ## Criteria
 
 Your work will be evaluated primarily on:
 
 * Consistency of coding style
-* Idiomatic use of `express`, `mongodb`, `bluebird` and `lodash`
+* Idiomatic use of `express`, `mySQL`, `bluebird` and `lodash`
 * Correct use of promises, including proper error handling. async/await may be used
 * Absence of "callback hell"
-* Efficient MongoDB queries
+* Efficient mySQL queries
 * Correct and complete unit test coverage
 * General quality of code and technical communication.
 

@@ -1,3 +1,28 @@
+# A short description about the completed assignment
+## How to run:
+- Install the packages using <code>npm install</code>
+- Change the database configuration from <strong>config.js</strong> file
+
+## Endpoints:
+- <code>/api/v1/stations?at={datetime}</code> (datetime format: YYYY-MM-DDTHH:MM:SS)
+- <code>/api/v1/stations/{kioskID}?at={datetime}</code> (datetime format: YYYY-MM-DDTHH:MM:SS)
+- <code>/api/v1/cron</code> (To get the cron job data manually)
+
+## Database:
+The database schema is:
+```javascript
+CREATE TABLE `cron_responses` (
+  `id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `indego_response` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`indego_response`)),
+  `weather_response` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`weather_response`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+## .env file
+I have provided the <code>.env</code> file as well. Change the credentials according to yours one
+<hr>
+
 # Backend Technical Assignment @Digikraft.io
 This is a technical assignment created to verify your Node.js skills for the purpose of recruitment at Digikraft.io
 

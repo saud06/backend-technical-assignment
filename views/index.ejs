@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="./stylesheets/style.css" />
+  </head>
+
+  <body>
+    <div class="menu">
+      <div class="menu-item"><a href="/api/v1/cron">Update Database</a></div>
+    </div>
+
+    <div id="home-container">
+      <div id="left-column"></div>
+      <div id="branding">
+        <h1>Indego API</h1>
+        <h3>Get all the stations</h3>
+        <input type="text" id="datetime" placeholder="e.g. 2022-11-09 01:00:00" />
+        <input type="submit" value="Get Data" onclick="getStations()" />
+
+        <br />
+
+        <h3>Get a specific station</h3>
+        <input type="text" id="datetime2" placeholder="e.g. 2022-11-09 01:00:00" />
+        <input type="text" id="kioskid" placeholder="e.g. 3005" />
+        <input type="submit" value="Get Data" onclick="getAStation()" />
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  document.getElementById('datetime').focus();
+
+  // Get all stations data by datetime
+  function getStations() {
+    const datetime = document.querySelector('input#datetime').value.replace(' ', 'T');
+
+    if (datetime) {
+      window.location.href = `/api/v1/stations?at=${datetime}`;
+    } else {
+      alert('Datetime is missing !');
+    }
+  }
+
+  // Get a station data by datetime & kioskID
+  function getAStation() {
+    const datetime = document.querySelector('input#datetime2').value.replace(' ', 'T');
+    const kioskID = document.querySelector('input#kioskid').value;
+
+    if (datetime && kioskID) {
+      window.location.href = `/api/v1/stations/${kioskID}?at=${datetime}`;
+    } else {
+      alert('Datetime or Kiosk ID is missing !');
+    }
+  }
+</script>
